@@ -1,0 +1,106 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'sans-serif';
+}
+
+body{
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container{
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 350px;
+}
+
+h2{
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.input-group{
+    position: relative;
+    margin: 20px 0;
+}
+
+input{
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus{
+    border-color: #764ba2;
+}
+
+label{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #aaa;
+    transition: 0.3s;
+}
+
+
+
+
+input:focus+label,input:valid+label{
+    top: -12px;
+    left: 5px;
+    font-size: 12px;
+    color: #764ba2;
+    background: #fff;
+    padding: 0 5px;
+}
+
+.toggle-password{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+button{
+    width: 100%;
+    padding: 10px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover{
+    background: #764ba2;
+}
+
+.register-link{
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.register-link a{
+    color: #667eea;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link a:hover{
+    text-decoration: underline;
+}

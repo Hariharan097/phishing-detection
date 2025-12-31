@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pie Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+        <style>
+        .topbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title{
+    margin: 0;
+}
+
+.welcome_text{
+    font-weight: 500;
+}
+
+/* Chart card spacing */
+.chart-card {
+    padding: 20px;
+}
+
+/* Center chart properly */
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 350px;          /* controls vertical position */
+}
+
+/* Canvas size */
+#pieChart {
+    max-width: 300px;
+    max-height: 300px;
+}
+
+/* Small note */
+.chart-note {
+    text-align: center;
+    margin-top: 10px;
+    color: #555;
+}
+.chart-card{
+    background-color: rgb(67, 243, 243);
+}
+
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('manage_users') }}">Manage Users</a>
+    <a href="{{ url_for('view_history') }}" class="active">View History</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</div>
+
+<div class="main">
+    <div class="topbar">
+        <h3>Phishing Detection Analysis</h3>
+        <span>Welcome, {{ user }}</span>
+    </div>
+
+   <div class="card chart-card">
+    <h3>Phishing vs Legitimate</h3>
+
+    <div class="chart-container">
+        <canvas id="pieChart"></canvas>
+    </div>
+
+    <p class="chart-note">👉 Click on a section to see exact count</p>
+</div>
+
+</div>
+
+<script>
+const dataValues = [{{ phishing_count }}, {{ safe_count }}];
+const labels = ["Phishing", "Legitimate"];
+
+const pieChart = new Chart(document.getElementById("pieChart"), {
+    type: "pie",
+    data: {
+        labels: labels,
+        datasets: [{
+            data: dataValues,
+            backgroundColor: ["#ff4d4d", "#4caf50"],
+
+            /* ✅ BLACK OUTLINE */
+            borderColor: "#000",
+            borderWidth: 2,
+            hoverBorderColor: "#000",
+            hoverBorderWidth: 3
+        }]
+    },
+    options: {
+        plugins: {
+
+            /* ✅ PROFESSIONAL LEGEND (TOP BOXES) */
+            legend: {
+                position: "top",
+                labels: {
+                    boxWidth: 18,
+                    boxHeight: 12,
+                    padding: 20,
+                    color: "#000",
+                    font: {
+                        size: 14,
+                        weight: "bold"
+                    }
+                }
+            },
+
+            /* TOOLTIP WITH NUMBER */
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return context.label + ": " + context.parsed;
+                    }
+                }
+            }
+        },
+
+        /* CLICK TO SHOW NUMBER */
+        onClick: (evt, elements) => {
+            if (elements.length > 0) {
+                const index = elements[0].index;
+                alert(labels[index] + " URLs: " + dataValues[index]);
+            }
+        }
+    }
+});
+</script>
+
+
+</body>
+</html>

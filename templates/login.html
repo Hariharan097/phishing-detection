@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="static/login.css">
+  <script src="static/login.js"></script>
+</head>
+<body>
+
+  
+
+<div class="login-container">
+  <h2>Login</h2>
+  
+  {% if error %}
+<div class="error-message">
+    {{ error }}
+</div>
+{% endif %}
+
+  <form method="POST">
+    <div class="input-group">
+      <input type="text" name="username" required>
+      <label>Username</label>
+    </div>
+
+    <div class="input-group">
+      <input type="password" id="password" name="password" required>
+      <label>Password</label>
+      <span class="toggle-password" onclick="togglePassword()">👁</span>
+    </div>
+
+    <button type="submit">Login</button>
+  </form>
+  
+
+  <div class="register-link">
+    New user? <a href="signup">Signup</a>
+  </div>
+</div>
+
+</body>
+</html>

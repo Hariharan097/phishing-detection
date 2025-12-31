@@ -1,0 +1,88 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background:linear-gradient(135deg, #ff4d6d, #ff7eb3, #667eea);
+    background-size: 300% 300%;
+    animation: gradientBG 8s ease infinite;
+}
+
+
+/*smooth animation for background*/
+@keyframes gradientBG {
+    0%{background-position: 0% 50%; }
+    50%{background-position: 100% 50%;}
+    100%{ background-position: 0% 50%;}
+}
+
+.signup-container{
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 370px;
+    text-align: center;
+}
+
+.signup-form h2 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.input-group{
+    margin-bottom: 1rem;
+}
+
+.input-group input{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.input-group input:focus{
+    border-color: #ff4d6d;
+    box-shadow: 0 0 5px rgba(255, 77, 109, 0.5);
+}
+
+button{
+    width: 100%;
+    padding: 12px;
+    background: #ff4d6d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover{
+    background: #e0435e;
+}
+
+.login-link{
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.login-link a{
+    color: #ff4d6d;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link a:hover{
+    text-decoration: underline;
+}

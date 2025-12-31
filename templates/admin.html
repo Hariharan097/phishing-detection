@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <style>
+        .topbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title{
+    margin: 0;
+}
+
+.welcome_text{
+    font-weight: 500;
+}
+
+    </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('manage_users') }}">Manage Users</a>
+    <a href="{{ url_for('view_history') }}">View History</a>
+    <a href="{{ url_for('charts') }}">Pie Chart</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <h3 class="title">Phishing Attack Detector</h3>
+        <h3 class="welcome_text">Welcome, {{ user }}</h3>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+        <div class="card">
+            <h1>{{ total_users }}</h1>
+            <p>Total Users</p>
+        </div>
+
+        <div class="card">
+            <h1>{{ total_checks }}</h1>
+            <p>Total URL Checks</p>
+        </div>
+
+        <div class="card">
+            <h1>{{ phishing_count }}</h1>
+            <p>Phishing Detected</p>
+        </div>
+
+        <div class="card">
+            <h1>{{ users|length }}</h1>
+            <p>Registered Accounts</p>
+        </div>
+    </div>
+
+    
+
+</div>
+
+</body>
+</html>

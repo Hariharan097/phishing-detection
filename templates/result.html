@@ -3,16 +3,32 @@
 <head>
   <meta charset="utf-8">
   <title>Result - Phishing Detector</title>
+ <!----> <link rel="stylesheet" href="{{ url_for('static', filename='result.css') }}">
   <style>
     body { font-family: Arial, sans-serif; max-width:700px; margin:40px auto; }
     .card { border:1px solid #ddd; padding:20px; border-radius:8px; box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
     .danger { color:#b00020; font-weight:700; }
-    .safe { color:#0b7a3b; font-weight:700; }
-    .info { margin-top:10px; color:#444; }
-    a.button { display:inline-block; margin-top:14px; padding:8px 12px; border-radius:6px; text-decoration:none; border:1px solid #ccc; }
+    .safe { color:#07c530; font-weight:700; }
+    .info { margin-top:10px; color:yellow; }
+    a.button{color: aliceblue; }
+    a.button { color:inline-block; margin-top:14px; padding:8px 12px; border-radius:6px; text-decoration:none; border:1px solid #ccc; }
   </style>
 </head>
 <body>
+  <!-- NAVBAR -->
+<div class="navbar">
+  <div class="nav-left">
+    <span class="logo">Phishing Detector</span>
+  </div>
+
+  <div class="nav-right">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('history') }}">History</a>
+    <span class="user">👤 {{ user }}</span>
+    <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+  </div>
+</div>
+
   <div class="card">
     <h2>Analysis Result</h2>
 
@@ -30,5 +46,6 @@
 
     <a class="button" href="/">Check another URL</a>
   </div>
+  
 </body>
 </html>

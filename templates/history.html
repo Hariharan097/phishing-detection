@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+<div class="navbar">
+  <div class="nav-left">
+    <span class="logo">Phishing Detector</span>
+  </div>
+
+  <div class="nav-right">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('history') }}">History</a>
+    <span class="user">👤 {{ user }}</span>
+    <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+  </div>
+</div>
+
+
+<div class="card">
+    <h2>{{ user }}'s URL History</h2>
+
+    {% if records %}
+    <table border="1" width="100%" cellpadding="8">
+        <tr>
+            <th>URL</th>
+            <th>Prediction</th>
+            <th>Confidence (%)</th>
+            <th>Date & Time</th>
+        </tr>
+
+        {% for row in records %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] if row[2] else 'N/A' }}</td>
+            <td>{{ row[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No history found.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('home') }}">⬅ Back to Detector</a> |
+    <a href="/logout">Logout</a>
+</div>
+
+</body>
+</html>

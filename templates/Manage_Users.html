@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <style>
+        /* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 220px;
+    height: 100vh;
+    background: #1f3a5f;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    margin: 15px 0;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #2d5c8a;
+}
+
+/* MAIN CONTENT */
+.main {
+    margin-left: 240px;
+    padding: 20px;
+    background: #f4f6f9;
+    min-height: 100vh;
+}
+
+/* TOP BAR */
+.topbar {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* TABLE */
+.table-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 220px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #1f3a5f;
+    color: #fff;
+}
+
+td a {
+    color: #1f3a5f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.title{
+    text-align: center;
+}
+
+.topbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title{
+    margin: 0;
+}
+
+.welcome_text{
+    font-weight: 500;
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('manage_users') }}">Manage Users</a>
+    <a href="{{ url_for('view_history') }}">View History</a>
+    <a href="{{ url_for('charts') }}">Pie Chart</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</div>
+
+
+<!-- USERS TABLE -->
+    <div class="table-box">
+        <div class="topbar">
+        <h3>User Management</h3>
+        <div class="welcome_text">
+        <span >Welcome, {{ user }}</span>
+        </div>
+    </div>
+        
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for u in users %}
+            <tr>
+                <td>{{ u[2] }}</td>
+                <td>{{ u[3] }}</td>
+                <td>{{ u[4] }}</td>
+                <td>
+                    {% if u[4] == 'pending' %}
+                        <a href="/admin/approve/{{ u[0] }}">Approve</a>
+                    {% endif %}
+                    |
+                    <a href="/admin/toggle_role/{{ u[0] }}">Toggle Role</a>
+                    |
+                    <a href="/admin/toggle_block/{{ u[0] }}">Block/Unblock</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>

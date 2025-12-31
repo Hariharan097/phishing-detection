@@ -71,12 +71,6 @@
 }
 
 body {
-    padding-top: 80px;   /* space for navbar */
-}
-
-
-/* ---------- Background with Floating Shapes ---------- */
-body {
     height: 100vh;
     background: radial-gradient(circle at top left, #6c63ff, #3a3fa0, #111);
     overflow: hidden;
@@ -115,12 +109,14 @@ body::after {
 .card {
     width: 100%;
     max-width: 520px;
-    background: rgba(255, 255, 255, 0.12);
+   /* background: rgba(255, 255, 255, 0.12);*/
+   background-color:rgba(231, 53, 136, 0.35) ;
     padding: 35px;
     border-radius: 18px;
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255,255,255,0.15);
     box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    margin-top: 5px;
    /* animation: fadeIn 0.9s ease, floatUp 4s infinite ease-in-out alternate; */
 }
 
