@@ -2,6 +2,7 @@ import pickle
 import sqlite3
 import numpy as np
 import os
+import math
 
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -187,22 +188,46 @@ def predict():
         return render_template("index.html", error=str(e), user=session["user"])
 
 # ---------------- HISTORY PAGE ----------------
-
-@app.route("/history")
+@app.route('/history')
 def history():
-    if "user" not in session:
-        return redirect(url_for("login"))
+    if 'user' not in session:
+        return redirect(url_for('login'))
 
-    conn = get_db()
-    cur = conn.cursor()
-    cur.execute(
-        "SELECT url, prediction, confidence, timestamp FROM history WHERE username=? ORDER BY timestamp DESC",
-        (session["user"],)
-    )
-    records = cur.fetchall()
+    user = session['user']
+
+    # Pagination settings
+    page = request.args.get('page', 1, type=int)
+    per_page = 5
+    offset = (page - 1) * per_page
+
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    # Get total records count
+    cursor.execute("SELECT COUNT(*) FROM history WHERE username = ?", (user,))
+    total_records = cursor.fetchone()[0]
+
+    # Get only 5 records
+    cursor.execute("""
+        SELECT url, prediction, confidence, timestamp
+        FROM history
+        WHERE username = ?
+        ORDER BY timestamp DESC
+        LIMIT ? OFFSET ?
+    """, (user, per_page, offset))
+
+    records = cursor.fetchall()
     conn.close()
 
-    return render_template("history.html", records=records, user=session["user"])
+    total_pages = math.ceil(total_records / per_page)
+
+    return render_template(
+        'history.html',
+        records=records,
+        user=user,
+        page=page,
+        total_pages=total_pages
+    )
 
 @app.route("/admin")
 def admin_dashboard():
@@ -307,6 +332,8 @@ def manage_users():
 
     return render_template("manage_users.html", users=users, user=session["user"])
 
+
+
 @app.route("/admin/history")
 def view_history():
     if "user" not in session or session.get("role") != "admin":
@@ -315,21 +342,36 @@ def view_history():
     conn = get_db()
     cur = conn.cursor()
 
-    # ✅ NO username filter here
+    # Get page number from URL
+    page = request.args.get("page", 1, type=int)
+    per_page = 10
+    offset = (page - 1) * per_page
+
+    # Get total records
+    cur.execute("SELECT COUNT(*) FROM history")
+    total_records = cur.fetchone()[0]
+
+    # Fetch 10 records only
     cur.execute("""
         SELECT username, url, prediction, confidence, timestamp
         FROM history
         ORDER BY timestamp DESC
-    """)
+        LIMIT ? OFFSET ?
+    """, (per_page, offset))
 
     history = cur.fetchall()
     conn.close()
 
+    total_pages = math.ceil(total_records / per_page)
+
     return render_template(
         "view_history.html",
         history=history,
-        user=session["user"]
+        user=session["user"],
+        page=page,
+        total_pages=total_pages
     )
+
 
 @app.route("/charts")
 def charts():
@@ -356,7 +398,7 @@ def charts():
 
 
 # ---------------- RUN ----------------
-#if __name__ == "__main__":
-  #  app.run(debug=True)
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+  app.run(debug=True)
+#if __name__ == "__main__":
+  #  app.run(host="0.0.0.0", port=10000)

@@ -42,13 +42,24 @@
         </tr>
         {% endfor %}
     </table>
+    <div style="margin-top: 20px; text-align: center;" >
+    {% if page > 1 %}
+        <a href="{{ url_for('history', page=page-1) }}">⬅ Previous</a>
+    {% endif %}
+
+    Page {{ page }} of {{ total_pages }}
+
+    {% if page < total_pages %}
+        <a href="{{ url_for('history', page=page+1) }}">Next ➡</a>
+    {% endif %}
+</div>
+
     {% else %}
     <p>No history found.</p>
     {% endif %}
 
     <br>
-    <a href="{{ url_for('home') }}">⬅ Back to Detector</a> |
-    <a href="/logout">Logout</a>
+   
 </div>
 
 </body>
