@@ -330,7 +330,7 @@ def manage_users():
     users = cur.fetchall()
     conn.close()
 
-    return render_template("manage_users.html", users=users, user=session["user"])
+    return render_template("Manage_Users.html", users=users, user=session["user"])
 
 
 
